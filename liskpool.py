@@ -3,7 +3,7 @@ import json
 import sys
 import time
 
-NODE = "https://wallet.shiftnrg.org"
+NODE = "https://wallet.shiftnrg.nl"
 NODEPAY = "http://localhost:9305"
 PUBKEY = "58e1340dadd72a14a292dd6978102827674788042b0f6fd43e75bea009dc68b4"
 LOGFILE = 'poollogs.json'
