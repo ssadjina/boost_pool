@@ -5,9 +5,9 @@ import time
 
 NODE = "https://wallet.shiftnrg.org"
 NODEPAY = "http://localhost:9305"
-PUBKEY = "120d1c3847bd272237ee712ae83de59bbeae127263196fc0f16934bcfa82d8a4"
+PUBKEY = "58e1340dadd72a14a292dd6978102827674788042b0f6fd43e75bea009dc68b4"
 LOGFILE = 'poollogs.json'
-PERCENTAGE = 20
+PERCENTAGE = 50
 MINPAYOUT = 0.1
 SECRET = "SECRET"
 SECONDSECRET = None
