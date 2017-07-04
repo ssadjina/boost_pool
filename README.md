@@ -50,7 +50,7 @@ or
 bash batch.sh
 ```
 
-There is also a 'batch.sh' file which run liskpool, then payments.sh and copy the poollogs.json
+This 'batch.sh' file will run liskpool, then payments.sh and copy the poollogs.json
 in the docs folder.
 
 
