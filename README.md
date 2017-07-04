@@ -42,7 +42,13 @@ To display the pool frontend, enable docs-site on github repository settings.
 
 The script is also runnable by cron using the -y argument:
 
-`python3 liskpool.py -y`
+```
+python3 liskpool.py -y`
+```
+or
+```
+bash batch.sh
+```
 
 There is also a 'batch.sh' file which run liskpool, then payments.sh and copy the poollogs.json
 in the docs folder.
