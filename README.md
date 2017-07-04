@@ -1,8 +1,12 @@
-# Lisk pool distribution software
+# Shift pool distribution software
 This software is created by lisk delegate "dakk", please consider a small donation if you
 use this software: "2324852447570841050L" for lisk or "7725849364280821971S" for shift.
 
-
+##Prerequisitions
+```
+sudo apt-get install python3
+sudo apt-get install python3-requests
+```
 ## Configuration
 Fork this repo; edit liskpool.py and modify the first lines with your settings:
 
