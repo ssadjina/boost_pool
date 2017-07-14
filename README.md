@@ -19,6 +19,7 @@ Fork this repo; edit liskpool.py and modify the first lines with your settings:
 - MINPAYOUT: the minimum amount for a payout
 
 Now edit docs/index.html and customize the webpage.
+When using a dedicated server just put the content of docs in /var/www/html
 
 Finally edit poollogs_example.json and put in lastpayout the unixtimestamp of your last payout or the
 date of pool starting; move poollogs_example.json to poollogs.json.
