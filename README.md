@@ -13,12 +13,12 @@ Fork this repo; edit liskpool.py and modify the first lines with your settings:
 - PUBKEY: your delegate pubkey
 - PERCENTAGE: percentage to distribute
 - SECRET: your secret
-- SECONDSECRET: your second secret or none if disabled
+- SECONDSECRET: your second
 - NODE: the lisk node where you get forging info
 - NODEPAY: the lisk node used for payments
 - MINPAYOUT: the minimum amount for a payout
 
-Now edit docs/index.html and customize the webpage.
+Now edit /docs/index.html and customize the webpage.
 When using a dedicated server just put the content of docs in /var/www/html
 
 Finally edit poollogs_example.json and put in lastpayout the unixtimestamp of your last payout or the
