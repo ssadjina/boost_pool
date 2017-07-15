@@ -2,11 +2,17 @@
 This software is created by lisk delegate "dakk", please consider a small donation if you
 use this software: "2324852447570841050L" for lisk or "7725849364280821971S" for shift.
 
-##Prerequisitions
+## Prerequisitions
 ```
 sudo apt-get install python3
 sudo apt-get install python3-requests
 ```
+## Download / clone repo
+```
+git clone https://www.github.com/seatrips/delegatepool.seatrips.nl
+```
+then rename folder to your own pool site
+
 ## Configuration
 Fork this repo; edit liskpool.py and modify the first lines with your settings:
 
