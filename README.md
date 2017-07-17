@@ -61,6 +61,9 @@ bash batch.sh
 This 'batch.sh' file will run liskpool, then payments.sh and copy the poollogs.json
 in the docs folder.
 
+## For easy documentation on running this on your own server 
+check https://github.com/seatrips/easy-apache2-site
+
 
 ## License
 Copyright 2017 Davide Gessa
