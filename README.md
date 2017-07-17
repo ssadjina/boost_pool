@@ -25,6 +25,8 @@ Fork this repo; edit liskpool.py and modify the first lines with your settings:
 - NODEPAY: the lisk node used for payments
 - MINPAYOUT: the minimum amount for a payout
 
+- You will also need to edit app.js in the /docs or /html folder
+
 Now edit /docs/index.html and customize the webpage.
 When using a dedicated server just put the content of docs in /var/www/html
 
