@@ -30,7 +30,7 @@ Fork this repo; edit liskpool.py and modify the first lines with your settings:
 Now edit /docs/index.html and customize the webpage.
 When using a dedicated server just put the content of docs in /var/www/html
 
-Finally edit poollogs.json and put in lastpayout the unixtimestamp of your last payout or the
+Finally edit poollogs.json and put in lastpayout the unixtimestamp (http://www.unixtimestamp.com/) of your last payout or the
 date of pool starting and donations adress and amount then copy to /docs folder or /html folder when using your own dedicated server
 
 
