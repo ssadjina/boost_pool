@@ -3,24 +3,28 @@ import json
 import sys
 import time
 
-NODE = "https://wallet.shiftnrg.nl"
-NODEPAY = "http://localhost:9305"
-PUBKEY = "38986c3b0c07f0789a8643b1078da38618ca7ae08673f0517efc49aedf2e0215"
-LOGFILE = 'poollogs.json'
+NODE = "https://wallet2.shiftnrg.nl"
+NODEPAY = "https://wallet.shiftnrg.nl"
+PUBKEY = ""
+LOGFILE = '/Applications/XAMPP/htdocs/docs/poollogs.json'
 PERCENTAGE = 50
-MINPAYOUT = 0.1
-SECRET = "SECRET"
-SECONDSECRET = None
+MINPAYOUT = 0.5
+SECRET = ""
+SECONDSECRET = ""
 
 def loadLog ():
 	try:
 		data = json.load (open (LOGFILE, 'r'))
 	except:
 		data = {
+            "forged": 0,
+            "topay": 0,
+            "weight": 0,
 			"lastpayout": 0, 
 			"accounts": {},
 			"skip": []
 		}
+		print ('error open file')
 	return data
 	
 	
@@ -33,9 +37,14 @@ def estimatePayouts (log):
 	uri = NODE + '/api/delegates/forging/getForgedByAccount?generatorPublicKey=' + PUBKEY + '&start=' + str (log['lastpayout']) + '&end=' + str (int (time.time ()))
 	d = requests.get (uri)
 	rew = d.json ()['rewards']
-	forged = (int (rew) / 100000000) * PERCENTAGE / 100
-	print ('To distribute: %f SHIFT' % forged)
-	
+	forged = (int (rew) / 100000000)
+	if forged == 0:
+		print "forged amount=0, nothing to distribute -> exiting"
+		raise SystemExit
+	topay = forged * PERCENTAGE / 100
+#	print ('To distribute: %f SHIFT' % topay)
+	log['forged'] = forged
+	log['topay'] = topay
 	d = requests.get (NODE + '/api/delegates/voters?publicKey=' + PUBKEY).json ()
 	
 	weight = 0.0
@@ -47,13 +56,19 @@ def estimatePayouts (log):
 			
 		weight += float (x['balance']) / 100000000
 		
-	print ('Total weight is: %f' % weight)
+#	print ('Total weight is: %f' % weight
+	log['weight'] = weight
 	
 	for x in d['accounts']:
 		if int (x['balance']) == 0 or x['address'] in log['skip']:
 			continue
-			
-		payouts.append ({ "address": x['address'], "balance": (float (x['balance']) / 100000000 * forged) / weight})
+
+		if x['username'] is None:
+			nm='.'
+		else:
+			nm=x['username']
+		
+		payouts.append ({"address": x['address'],"name": nm, "tot": 100 * (float (x['balance']) / weight / 100000000), "balance": (float (x['balance']) / 100000000 * topay) / weight})
 		#print (float (x['balance']) / 100000000, payouts [x['address']], x['address'])
 		
 	return payouts
@@ -62,19 +77,22 @@ def estimatePayouts (log):
 
 if __name__ == "__main__":
 	log = loadLog ()
-	
 	topay = estimatePayouts(log)
 	
 	f = open ('payments.sh', 'w')
 	for x in topay:
 		if not (x['address'] in log['accounts']) and x['balance'] != 0.0:
-			log['accounts'][x['address']] = { 'pending': 0.0, 'received': 0.0 }
+			log['accounts'][x['address']] = {'name': x['name'], 'vwght': 0.0,'paid': 0.0, 'pending': 0.0, 'received': 0.0 }
 			
 		if x['balance'] < MINPAYOUT:
 			log['accounts'][x['address']]['pending'] += x['balance']
+			log['accounts'][x['address']]['paid'] = x['balance']
+			log['accounts'][x['address']]['vwght'] = x['tot']
 			continue
 			
-		log['accounts'][x['address']]['received'] += x['balance']	
+		log['accounts'][x['address']]['received'] += x['balance']
+		log['accounts'][x['address']]['vwght'] = x['tot']	
+		log['accounts'][x['address']]['paid'] = x['balance']	
 		
 		f.write ('echo Sending ' + str (x['balance']) + ' to ' + x['address'] + '\n')
 		
@@ -96,22 +114,11 @@ if __name__ == "__main__":
 			
 			f.write ('curl -k -H  "Content-Type: application/json" -X PUT -d \'' + json.dumps (data) + '\' ' + NODEPAY + "/api/transactions\n\n")
 			log['accounts'][y]['received'] += log['accounts'][y]['pending']
+			log['accounts'][y]['paid'] = log['accounts'][y]['pending']
 			log['accounts'][y]['pending'] = 0.0
 			f.write ('sleep 10\n')
 			
-	# Donations
-	if 'donations' in log:
-		for y in log['donations']:
-			f.write ('echo Sending donation ' + str (log['donations'][y]) + ' to ' + y + '\n')
-				
-			data = { "secret": SECRET, "amount": int (log['donations'][y] * 100000000), "recipientId": y }
-			if SECONDSECRET != None:
-				data['secondSecret'] = SECONDSECRET
-			
-		f.write ('curl -k -H  "Content-Type: application/json" -X PUT -d \'' + json.dumps (data) + '\' ' + NODEPAY + "/api/transactions\n\n")
-		f.write ('sleep 10\n')
-
-
+		
 	f.close ()
 	
 	log['lastpayout'] = int (time.time ())
