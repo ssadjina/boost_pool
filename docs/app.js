@@ -23,7 +23,7 @@ app.controller('indexCtrl', function($scope, $http) {
         }
     });
 
-    $http.get ('https://wallet.shiftnrg.org/api/delegates/get?username=seatrips').then (function (res) {
+    $http.get ('https://wallet.shiftnrg.nl/api/delegates/get?username=seatrips').then (function (res) {
         $scope.delegate = res.data.delegate;
     });
 });
