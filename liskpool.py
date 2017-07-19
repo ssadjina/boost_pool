@@ -3,7 +3,7 @@ import json
 import sys
 import time
 
-NODE = "https://wallet2.shiftnrg.nl"
+NODE = "http://wallet2.shiftnrg.nl:9305"
 NODEPAY = "https://wallet.shiftnrg.nl"
 PUBKEY = ""
 LOGFILE = '/Applications/XAMPP/htdocs/docs/poollogs.json'
