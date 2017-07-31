@@ -7,6 +7,7 @@ use this software: "2324852447570841050L" for lisk or "7725849364280821971S" for
 ```
 sudo apt-get install python3
 sudo apt-get install python3-requests
+sudo apt-get install curl
 ```
 ## Download / clone repo
 ```
